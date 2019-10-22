@@ -1,0 +1,14 @@
+{
+  "name": "fifit-error",
+  "description": "The Fifit Error",
+  "license": "Apache-2.0",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yudhatamaaditiyara/Fifit-Error.git"
+  },
+  "dependencies": {
+    "ganiyem-error": "1.2.0",
+    "fifit-util-status": "0.0.1"
+  }
+}
