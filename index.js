@@ -65,7 +65,7 @@ function createClassName(name){
 function createClientErrorClass(name, statusCode, statusMessage){
 	return class extends ClientError{
 		constructor(message, headers){
-			super(statusCode, message != null ? message : statusMessage);
+			super(statusCode, message != null ? message : statusMessage, headers);
 			Object.defineProperty(this, "name", {
 				value: name, configurable: true, enumerable: false, writable: true
 			});
@@ -82,7 +82,7 @@ function createClientErrorClass(name, statusCode, statusMessage){
 function createServerErrorClass(name, statusCode, statusMessage){
 	return class extends ServerError{
 		constructor(message, headers){
-			super(statusCode, message != null ? message : statusMessage);
+			super(statusCode, message != null ? message : statusMessage, headers);
 			Object.defineProperty(this, "name", {
 				value: name, configurable: true, enumerable: false, writable: true
 			});
