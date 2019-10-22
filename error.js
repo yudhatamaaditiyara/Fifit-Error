@@ -16,7 +16,7 @@
 'use strict';
 
 const status = require("fifit-util-status");
-const RuntimeError = require("ganiyem-error/runtimeError");
+const {RuntimeError} = require("ganiyem-error");
 
 /**
  */
