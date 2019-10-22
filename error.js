@@ -15,7 +15,11 @@
  */
 'use strict';
 
-const status = require("fifit-util-status");
+const {
+	isClientErrorStatus,
+	isServerErrorStatus,
+	isErrorStatus
+} = require("fifit-util-status");
 const {RuntimeError} = require("ganiyem-error");
 
 /**
@@ -41,14 +45,14 @@ class Error extends RuntimeError
 	 * @returns {boolean}
 	 */
 	get isClientError(){
-		return status.isClientErrorStatus(this.status);
+		return isClientErrorStatus(this.status);
 	}
 	
 	/**
 	 * @returns {boolean}
 	 */
 	get isServerError(){
-		return status.isServerErrorStatus(this.status);
+		return isServerErrorStatus(this.status);
 	}
 
 	/**
@@ -56,7 +60,7 @@ class Error extends RuntimeError
 	 * @returns {number}
 	 */
 	_filterStatus(status){
-		if (status.isErrorStatus(status)) {
+		if (isErrorStatus(status)) {
 			return status;
 		}
 		return 500;
