@@ -15,11 +15,7 @@
  */
 'use strict';
 
-const {
-	isClientErrorStatus,
-	isServerErrorStatus,
-	isErrorStatus
-} = require("fifit-util-status");
+const {isClientErrorStatus, isServerErrorStatus, isErrorStatus} = require("fifit-util-status");
 const {RuntimeError} = require("ganiyem-error");
 
 /**
