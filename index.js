@@ -15,7 +15,6 @@
  */
 'use strict';
 
-const http = require('http');
 const status = require('fifit-util-status');
 const Error = require('./lib/error');
 const ClientError = require('./lib/clientError');
