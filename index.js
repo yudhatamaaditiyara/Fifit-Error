@@ -17,9 +17,9 @@
 
 const http = require('http');
 const status = require('fifit-util-status');
-const Error = require('./error');
-const ClientError = require('./clientError');
-const ServerError = require('./serverError');
+const Error = require('./lib/error');
+const ClientError = require('./lib/clientError');
+const ServerError = require('./lib/serverError');
 
 /**
  * @returns {Object}
