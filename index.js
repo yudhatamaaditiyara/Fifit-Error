@@ -74,7 +74,7 @@ function createClientErrorClass(name, statusCode, statusMessage){
 		 * @param {Object=} headers 
 		 */
 		constructor(message, headers){
-			super(statusCode, message != null ? message : statusMessage, headers);
+			super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
 			Object.defineProperty(this, 'name', {
 				value: name, configurable: true, enumerable: false, writable: true
 			});
@@ -95,7 +95,7 @@ function createServerErrorClass(name, statusCode, statusMessage){
 		 * @param {Object=} headers 
 		 */
 		constructor(message, headers){
-			super(statusCode, message != null ? message : statusMessage, headers);
+			super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
 			Object.defineProperty(this, 'name', {
 				value: name, configurable: true, enumerable: false, writable: true
 			});
