@@ -34,15 +34,20 @@ function setup(){
 			name = createClassName(status.identifiers[code]);
 			constructor = createClientErrorClass(name, code, message);
 			exports[name] = constructor;
-			exports[code] = constructor;
+			exports.codes[code] = constructor;
+			exports.messages[message] = constructor;
 		} else if (status.isServerErrorStatus(code)) {
 			name = createClassName(status.identifiers[code]);
 			constructor = createServerErrorClass(name, code, message);
 			exports[name] = constructor;
-			exports[code] = constructor;
+			exports.codes[code] = constructor;
+			exports.messages[message] = constructor;
 		}
 		return exports;
-	},{});
+	},{
+		codes: {},
+		messages: {}
+	});
 }
 
 /**
