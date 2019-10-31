@@ -15,11 +15,11 @@
  */
 'use strict';
 
-const http = require("http");
-const status = require("fifit-util-status");
-const Error = require("./error");
-const ClientError = require("./clientError");
-const ServerError = require("./serverError");
+const http = require('http');
+const status = require('fifit-util-status');
+const Error = require('./error');
+const ClientError = require('./clientError');
+const ServerError = require('./serverError');
 
 /**
  * @returns {Object}
@@ -51,7 +51,7 @@ function setup(){
  */
 function createClassName(name){
 	if (!/Error$/.test(name)) {
-		name += "Error";
+		name += 'Error';
 	}
 	return name;
 }
@@ -66,7 +66,7 @@ function createClientErrorClass(name, statusCode, statusMessage){
 	return class extends ClientError{
 		constructor(message, headers){
 			super(statusCode, message != null ? message : statusMessage, headers);
-			Object.defineProperty(this, "name", {
+			Object.defineProperty(this, 'name', {
 				value: name, configurable: true, enumerable: false, writable: true
 			});
 		}
@@ -83,7 +83,7 @@ function createServerErrorClass(name, statusCode, statusMessage){
 	return class extends ServerError{
 		constructor(message, headers){
 			super(statusCode, message != null ? message : statusMessage, headers);
-			Object.defineProperty(this, "name", {
+			Object.defineProperty(this, 'name', {
 				value: name, configurable: true, enumerable: false, writable: true
 			});
 		}
