@@ -22,7 +22,7 @@ const ClientError = require('./lib/clientError');
 const ServerError = require('./lib/serverError');
 
 /**
- * @returns {Object}
+ * @return {Object}
  */
 function setup(){
 	let name;
@@ -47,7 +47,7 @@ function setup(){
 
 /**
  * @param {string} name
- * @returns {string}
+ * @return {string}
  */
 function createClassName(name){
 	if (!/Error$/.test(name)) {
@@ -60,10 +60,14 @@ function createClassName(name){
  * @param {string} name
  * @param {number} statusCode
  * @param {string} statusMessage
- * @returns {function}
+ * @return {function}
  */
 function createClientErrorClass(name, statusCode, statusMessage){
 	return class extends ClientError{
+		/**
+		 * @param {string=} message 
+		 * @param {Object=} headers 
+		 */
 		constructor(message, headers){
 			super(statusCode, message != null ? message : statusMessage, headers);
 			Object.defineProperty(this, 'name', {
@@ -77,10 +81,14 @@ function createClientErrorClass(name, statusCode, statusMessage){
  * @param {string} name
  * @param {number} statusCode
  * @param {string} statusMessage
- * @returns {function}
+ * @return {function}
  */
 function createServerErrorClass(name, statusCode, statusMessage){
 	return class extends ServerError{
+		/**
+		 * @param {string=} message 
+		 * @param {Object=} headers 
+		 */
 		constructor(message, headers){
 			super(statusCode, message != null ? message : statusMessage, headers);
 			Object.defineProperty(this, 'name', {
