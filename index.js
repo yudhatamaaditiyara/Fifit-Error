@@ -52,7 +52,7 @@ error.messages = {};
 
 /**
  * @param {string} name
- * @param {number|string} statusCode
+ * @param {number} statusCode
  * @param {string} statusMessage
  * @return {function}
  */
@@ -73,7 +73,7 @@ function createClientErrorClass(name, statusCode, statusMessage){
 
 /**
  * @param {string} name
- * @param {number|string} statusCode
+ * @param {number} statusCode
  * @param {string} statusMessage
  * @return {function}
  */
