@@ -15,45 +15,46 @@
  */
 const assert = require('assert');
 const status = require('fifit-util-status');
-const errors = require('../../');
+const error = require('../../');
 
 /**
  */
 describe('index', () => {
 	/**
 	 */
-	it('typeof(errors.codes) === "object"', () => {
-		assert.ok(errors.codes !== null && typeof errors.codes == 'object');
+	it('typeof(error.codes) === "object"', () => {
+		assert.ok(error.codes !== null && typeof error.codes == 'object');
 	});
 
 	/**
 	 */
-	it('typeof(errors.messages) === "object"', () => {
-		assert.ok(errors.messages !== null && typeof errors.messages == 'object');
+	it('typeof(error.messages) === "object"', () => {
+		assert.ok(error.messages !== null && typeof error.messages == 'object');
 	});
 
 	/**
 	 */
-	it('errors.codes', () => {
-		for (let code in errors.codes) {
-			let constructor = errors.codes[code];
+	it('error.codes', () => {
+		assert.ok(Object.keys(error.codes).length > 0);
+		for (let code in error.codes) {
+			let constructor = error.codes[code];
 			assert.ok(typeof constructor === 'function');
 
-			let error = new constructor();
+			let object = new constructor();
 			let message = status.codes[code];
 
-			assert.ok(error instanceof errors.Error);
-			assert.strictEqual(error.status, parseInt(code));
-			assert.strictEqual(error.message, message);
+			assert.ok(object instanceof error.Error);
+			assert.strictEqual(object.status, status.messages[message]);
+			assert.strictEqual(object.message, message);
 			
 			if (status.isClientErrorStatus(code)) {
-				assert.ok(error.isClientError);
-				assert.ok(!error.isServerError);
-				assert.ok(error instanceof errors.ClientError);
+				assert.ok(object.isClientError);
+				assert.ok(!object.isServerError);
+				assert.ok(object instanceof error.ClientError);
 			} else if (status.isServerErrorStatus(code)) {
-				assert.ok(error.isServerError);
-				assert.ok(!error.isClientError);
-				assert.ok(error instanceof errors.ServerError);
+				assert.ok(object.isServerError);
+				assert.ok(!object.isClientError);
+				assert.ok(object instanceof error.ServerError);
 			} else {
 				assert.ok(false);
 			}
@@ -68,73 +69,67 @@ describe('index', () => {
 
 	/**
 	 */
-	it('errors.messages', () => {
-		for (let message in errors.messages) {
-			let constructor = errors.messages[message];
+	it('error.messages', () => {
+		assert.ok(Object.keys(error.messages).length > 0);
+		for (let message in error.messages) {
+			let constructor = error.messages[message];
 			assert.ok(typeof constructor === 'function');
 
-			let error = new constructor();
+			let object = new constructor();
 			let code = status.messages[message];
 
-			assert.ok(error instanceof errors.Error);
-			assert.strictEqual(error.status, parseInt(code));
-			assert.strictEqual(error.message, message);
+			assert.ok(object instanceof error.Error);
+			assert.strictEqual(object.status, status.errorMessages[message]);
+			assert.strictEqual(object.message, message);
 			
 			if (status.isClientErrorStatus(code)) {
-				assert.ok(error.isClientError);
-				assert.ok(!error.isServerError);
-				assert.ok(error instanceof errors.ClientError);
+				assert.ok(object.isClientError);
+				assert.ok(!object.isServerError);
+				assert.ok(object instanceof error.ClientError);
 			} else if (status.isServerErrorStatus(code)) {
-				assert.ok(error.isServerError);
-				assert.ok(!error.isClientError);
-				assert.ok(error instanceof errors.ServerError);
+				assert.ok(object.isServerError);
+				assert.ok(!object.isClientError);
+				assert.ok(object instanceof error.ServerError);
 			} else {
 				assert.ok(false);
 			}
 
 			let headers = {};
 			let instance = new constructor(code, headers);
-			assert.strictEqual(instance.status, parseInt(code));
-			assert.strictEqual(instance.message, code);
+			assert.strictEqual(instance.status, code);
+			assert.strictEqual(instance.message, String(code));
 			assert.strictEqual(instance.headers, headers);
 		}
 	});
 
 	/**
 	 */
-	it('errors.#identifiers', () => {
-		for (let code in status.identifiers) {
-			let identifier = status.identifiers[code];
-			if (!status.isErrorStatus(code)) {
-				continue;
-			}
+	it('error.#identifiers', () => {
+		for (let code in status.errorClassNames) {
+			let name = status.errorClassNames[code];
+			assert.ok(typeof error[name] == 'function');
 
-			let name = !/Error$/.test(identifier) ? (identifier + 'Error') : identifier;
-			let constructor = errors[name];
-			
-			assert.ok(typeof constructor === 'function');
+			let object = new error[name]();
+			let message = status.errorCodes[code];
 
-			let error = new constructor();
-			let message = status.codes[code];
+			assert.ok(object instanceof error.Error);
+			assert.strictEqual(object.status, status.errorMessages[message]);
+			assert.strictEqual(object.message, message);
 
-			assert.ok(error instanceof errors.Error);
-			assert.strictEqual(error.status, parseInt(code));
-			assert.strictEqual(error.message, message);
-			
 			if (status.isClientErrorStatus(code)) {
-				assert.ok(error.isClientError);
-				assert.ok(!error.isServerError);
-				assert.ok(error instanceof errors.ClientError);
+				assert.ok(object.isClientError);
+				assert.ok(!object.isServerError);
+				assert.ok(object instanceof error.ClientError);
 			} else if (status.isServerErrorStatus(code)) {
-				assert.ok(error.isServerError);
-				assert.ok(!error.isClientError);
-				assert.ok(error instanceof errors.ServerError);
+				assert.ok(object.isServerError);
+				assert.ok(!object.isClientError);
+				assert.ok(object instanceof error.ServerError);
 			} else {
 				assert.ok(false);
 			}
 
 			let headers = {};
-			let instance = new constructor(code, headers);
+			let instance = new error[name](code, headers);
 			assert.strictEqual(instance.status, parseInt(code));
 			assert.strictEqual(instance.message, code);
 			assert.strictEqual(instance.headers, headers);

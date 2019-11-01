@@ -21,48 +21,38 @@ const ClientError = require('./lib/clientError');
 const ServerError = require('./lib/serverError');
 
 /**
- * @return {Object}
+ * @var {Object}
  */
-function setup(){
-	let name;
-	let constructor;
-	return status.entries.reduce((exports, entry) => {
-		let code = entry[0];
-		let message = entry[1];
-		if (status.isClientErrorStatus(code)) {
-			name = createClassName(status.identifiers[code]);
-			constructor = createClientErrorClass(name, code, message);
-			exports[name] = constructor;
-			exports.codes[code] = constructor;
-			exports.messages[message] = constructor;
-		} else if (status.isServerErrorStatus(code)) {
-			name = createClassName(status.identifiers[code]);
-			constructor = createServerErrorClass(name, code, message);
-			exports[name] = constructor;
-			exports.codes[code] = constructor;
-			exports.messages[message] = constructor;
-		}
-		return exports;
-	},{
-		codes: {},
-		messages: {}
-	});
-}
+const error = module.exports = {};
+
+/**
+ * @var {function}
+ */
+error.Error = Error;
+
+/**
+ * @var {function}
+ */
+error.ClientError = ClientError;
+
+/**
+ * @var {function}
+ */
+error.ServerError = ServerError;
+
+/**
+ * @var {Object}
+ */
+error.codes = {};
+
+/**
+ * @var {Object}
+ */
+error.messages = {};
 
 /**
  * @param {string} name
- * @return {string}
- */
-function createClassName(name){
-	if (!/Error$/.test(name)) {
-		name += 'Error';
-	}
-	return name;
-}
-
-/**
- * @param {string} name
- * @param {number} statusCode
+ * @param {number|string} statusCode
  * @param {string} statusMessage
  * @return {function}
  */
@@ -83,7 +73,7 @@ function createClientErrorClass(name, statusCode, statusMessage){
 
 /**
  * @param {string} name
- * @param {number} statusCode
+ * @param {number|string} statusCode
  * @param {string} statusMessage
  * @return {function}
  */
@@ -105,7 +95,21 @@ function createServerErrorClass(name, statusCode, statusMessage){
 /**
  * @+
  */
-module.exports = setup();
-module.exports.Error = Error;
-module.exports.ClientError = ClientError;
-module.exports.ServerError = ServerError;
+status.clientErrorEntries.forEach(([code, message]) => {
+	let name = status.errorClassNames[code];
+	let constructor = createClientErrorClass(name, code, message);
+	error[name] = constructor;
+	error.codes[code] = constructor;
+	error.messages[message] = constructor;
+});
+
+/**
+ * @+
+ */
+status.serverErrorEntries.forEach(([code, message]) => {
+	let name = status.errorClassNames[code];
+	let constructor = createServerErrorClass(name, code, message);
+	error[name] = constructor;
+	error.codes[code] = constructor;
+	error.messages[message] = constructor;
+});
