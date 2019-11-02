@@ -21,32 +21,32 @@ const ClientError = require('./lib/clientError');
 const ServerError = require('./lib/serverError');
 
 /**
- * @var {Object}
+ * @type {Object}
  */
 const error = module.exports = {};
 
 /**
- * @var {function}
+ * @type {function}
  */
 error.Error = Error;
 
 /**
- * @var {function}
+ * @type {function}
  */
 error.ClientError = ClientError;
 
 /**
- * @var {function}
+ * @type {function}
  */
 error.ServerError = ServerError;
 
 /**
- * @var {Object}
+ * @type {Object}
  */
 error.codes = {};
 
 /**
- * @var {Object}
+ * @type {Object}
  */
 error.messages = {};
 
@@ -54,13 +54,13 @@ error.messages = {};
  * @param {string} name
  * @param {number} statusCode
  * @param {string} statusMessage
- * @return {function}
+ * @returns {function}
  */
 function createClientErrorClass(name, statusCode, statusMessage){
 	return class extends ClientError{
 		/**
-		 * @param {string=} message 
-		 * @param {Object=} headers 
+		 * @param {string} [message]
+		 * @param {Object} [headers]
 		 */
 		constructor(message, headers){
 			super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
@@ -75,13 +75,13 @@ function createClientErrorClass(name, statusCode, statusMessage){
  * @param {string} name
  * @param {number} statusCode
  * @param {string} statusMessage
- * @return {function}
+ * @returns {function}
  */
 function createServerErrorClass(name, statusCode, statusMessage){
 	return class extends ServerError{
 		/**
-		 * @param {string=} message 
-		 * @param {Object=} headers 
+		 * @param {string} [message]
+		 * @param {Object} [headers]
 		 */
 		constructor(message, headers){
 			super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
