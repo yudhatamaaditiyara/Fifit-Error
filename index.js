@@ -57,18 +57,18 @@ error.messages = {};
  * @returns {function}
  */
 function createClientErrorClass(name, statusCode, statusMessage){
-	return class extends ClientError{
-		/**
-		 * @param {string} [message]
-		 * @param {Object} [headers]
-		 */
-		constructor(message, headers){
-			super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
-			Object.defineProperty(this, 'name', {
-				value: name, configurable: true, enumerable: false, writable: true
-			});
-		}
-	};
+  return class extends ClientError{
+    /**
+     * @param {string} [message]
+     * @param {Object} [headers]
+     */
+    constructor(message, headers){
+      super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
+      Object.defineProperty(this, 'name', {
+        value: name, configurable: true, enumerable: false, writable: true
+      });
+    }
+  };
 }
 
 /**
@@ -78,38 +78,38 @@ function createClientErrorClass(name, statusCode, statusMessage){
  * @returns {function}
  */
 function createServerErrorClass(name, statusCode, statusMessage){
-	return class extends ServerError{
-		/**
-		 * @param {string} [message]
-		 * @param {Object} [headers]
-		 */
-		constructor(message, headers){
-			super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
-			Object.defineProperty(this, 'name', {
-				value: name, configurable: true, enumerable: false, writable: true
-			});
-		}
-	};
+  return class extends ServerError{
+    /**
+     * @param {string} [message]
+     * @param {Object} [headers]
+     */
+    constructor(message, headers){
+      super(statusCode, typeof message !== 'undefined' ? message : statusMessage, headers);
+      Object.defineProperty(this, 'name', {
+        value: name, configurable: true, enumerable: false, writable: true
+      });
+    }
+  };
 }
 
 /**
  * @+
  */
 status.clientErrorEntries.forEach(([code, message]) => {
-	let name = status.errorClassNames[code];
-	let constructor = createClientErrorClass(name, code, message);
-	error[name] = constructor;
-	error.codes[code] = constructor;
-	error.messages[message] = constructor;
+  let name = status.errorClassNames[code];
+  let constructor = createClientErrorClass(name, code, message);
+  error[name] = constructor;
+  error.codes[code] = constructor;
+  error.messages[message] = constructor;
 });
 
 /**
  * @+
  */
 status.serverErrorEntries.forEach(([code, message]) => {
-	let name = status.errorClassNames[code];
-	let constructor = createServerErrorClass(name, code, message);
-	error[name] = constructor;
-	error.codes[code] = constructor;
-	error.messages[message] = constructor;
+  let name = status.errorClassNames[code];
+  let constructor = createServerErrorClass(name, code, message);
+  error[name] = constructor;
+  error.codes[code] = constructor;
+  error.messages[message] = constructor;
 });
