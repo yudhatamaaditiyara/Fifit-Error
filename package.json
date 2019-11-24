@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "ganiyem-error": "1.5.2",
-    "fifit-util-status": "0.0.7"
+    "fifit-util-status": "0.0.8"
   },
   "devDependencies": {
     "coveralls": "3.0.7",
