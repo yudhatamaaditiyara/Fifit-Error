@@ -8,13 +8,13 @@
     "url": "git+https://github.com/yudhatamaaditiyara/Fifit-Error.git"
   },
   "dependencies": {
-    "ganiyem-error": "1.5.2",
-    "fifit-util-status": "0.0.8"
+    "ganiyem-error": "^1.5.2",
+    "fifit-util-status": "^0.0.8"
   },
   "devDependencies": {
-    "coveralls": "3.0.7",
-    "mocha": "6.2.2",
-    "nyc": "14.1.1"
+    "coveralls": "^3.0.7",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1"
   },
   "engines": {
     "node": ">= 12.0.0"
